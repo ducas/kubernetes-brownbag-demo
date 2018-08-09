@@ -1,0 +1,6 @@
+{
+    "functions": [ "hello" ],
+    "http": {
+        "routePrefix": ""
+    }
+}

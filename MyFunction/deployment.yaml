@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-function
+  labels:
+    app: hello-function
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-function
+  template:
+    metadata:
+      labels:
+        app: hello-function
+    spec:
+      containers:
+      - name: hello-function
+        image: ducas/hello-function
+        resources:
+          requests:
+            cpu: 100m
+
+---
+
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hello-function
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hello-function
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 50
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: hello-function
+spec:
+  type: LoadBalancer
+  selector:
+    app: hello-function
+  ports:
+  - protocol: TCP
+    port: 8081
+    targetPort: 80
+    name: http

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapi
+  labels:
+    app: webapi
+spec:
+  containers:
+  - name: webapi
+    image: ducas/webapi
+    imagePullPolicy: IfNotPresent

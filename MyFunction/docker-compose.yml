@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  hello:
+    image: ducas/hello-function
+    build:
+      context: .
+    ports:
+    - 8080:80

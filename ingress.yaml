@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: myapp
+spec:
+  rules:
+  - host: localtest.me
+    http:
+      paths:
+      - path: /fn
+        backend:
+          serviceName: hello-function
+          servicePort: http
+      - path: /wa
+        backend:
+          serviceName: webapi
+          servicePort: http
+
+          
